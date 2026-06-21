@@ -1,0 +1,12 @@
+environment             = "prod"
+project_name            = "myproj"
+resource_group_name     = "rg-myproj-prod"
+location                = "eastus"
+vm_count                = 5
+vmss_instance_count     = 10
+vm_size                 = "Standard_DS3_v2"
+mysql_sku               = "GP_Gen5_8"
+subscription_id         = ""  # Set via environment variable ARM_SUBSCRIPTION_ID
+client_id               = ""  # Set via environment variable ARM_CLIENT_ID
+client_secret           = ""  # Set via environment variable ARM_CLIENT_SECRET
+tenant_id               = ""  # Set via environment variable ARM_TENANT_ID

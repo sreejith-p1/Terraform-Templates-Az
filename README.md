@@ -90,6 +90,9 @@ key                      = "terraform.tfstate"
 
 Environment-specific variables are defined in `environments/<env>/variables.tfvars`.
 
+- `environments/*/backend.tfvars` and `environments/*/variables.tfvars` should be tracked in Git when they contain non-sensitive defaults.
+- Keep sensitive values out of committed `.tfvars` files. Use GitLab CI/CD variables or local environment variables for secrets like `ARM_CLIENT_SECRET`.
+
 Common variables:
 - `environment`: Deployment environment (dev/uat/prod)
 - `project_name`: Project name for resource naming
