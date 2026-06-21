@@ -1,4 +1,7 @@
+# Root configuration that ties together all module deployments.
+# This file creates the shared resource group and then invokes modules.
 resource "azurerm_resource_group" "main" {
+  # A single Azure Resource Group is used as a container for all resources.
   name     = "rg-${local.resource_prefix}"
   location = var.location
 
@@ -16,10 +19,13 @@ module "networking" {
 
   tags = local.common_tags
 
+  # Ensure network resources exist before other dependent modules deploy.
   depends_on = [azurerm_resource_group.main]
 }
 
 # VM Module
+# Builds one or more standalone Windows VMs inside the first subnet.
+# It depends on the networking module because the VMs need a subnet.
 module "vm" {
   source = "./modules/vm"
 
@@ -39,6 +45,7 @@ module "vm" {
 }
 
 # VMSS Module
+# Deploys a Virtual Machine Scale Set for scalable compute workloads.
 module "vmss" {
   source = "./modules/vmss"
 
@@ -58,6 +65,7 @@ module "vmss" {
 }
 
 # Storage Module
+# Creates an Azure Storage Account and a private blob container.
 module "storage" {
   source = "./modules/storage"
 
@@ -72,6 +80,7 @@ module "storage" {
 }
 
 # Front Door Module
+# Creates an Azure Front Door endpoint to route traffic to backend VMs.
 module "frontdoor" {
   source = "./modules/frontdoor"
 

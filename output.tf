@@ -1,3 +1,5 @@
+# Outputs expose important information after Terraform applies the configuration.
+# These are useful for debugging, automation, or passing data to other systems.
 # Networking Outputs
 output "vnet_id" {
   description = "ID of the Virtual Network"

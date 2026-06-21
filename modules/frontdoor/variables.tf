@@ -1,3 +1,4 @@
+# Front Door module input variables describe the backend resources and context used to build the endpoint.
 variable "resource_group_name" {
   type        = string
   description = "Name of the resource group"

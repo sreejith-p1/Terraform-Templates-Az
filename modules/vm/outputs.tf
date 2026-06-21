@@ -1,3 +1,4 @@
+# VM module outputs expose values that other modules or the root module can consume.
 output "vm_ids" {
   description = "IDs of all created VMs"
   value       = azurerm_windows_virtual_machine.main[*].id

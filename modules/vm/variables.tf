@@ -1,3 +1,4 @@
+# VM module input variables describe the data this module needs from the root configuration.
 variable "resource_group_name" {
   type        = string
   description = "Name of the resource group"

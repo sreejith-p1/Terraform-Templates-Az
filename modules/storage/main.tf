@@ -1,3 +1,5 @@
+# Storage module creates a storage account and a private blob container.
+# Storage accounts must have a globally unique name, so we remove hyphens for validity.
 resource "azurerm_storage_account" "main" {
   name                     = replace("${var.project_name}${var.environment}storage", "-", "")
   location                 = var.location

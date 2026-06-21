@@ -1,3 +1,4 @@
+# Storage module input variables describe the storage account configuration and deployment context.
 variable "resource_group_name" {
   type        = string
   description = "Name of the resource group"

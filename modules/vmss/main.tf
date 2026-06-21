@@ -1,3 +1,4 @@
+# VMSS module deploys a scale set that can grow for more load than single VMs.
 resource "azurerm_windows_virtual_machine_scale_set" "main" {
   name                = "${var.project_name}-${var.environment}-vmss"
   location            = var.location

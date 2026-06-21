@@ -1,3 +1,4 @@
+# VMSS module input variables describe the data required to deploy the scale set.
 variable "resource_group_name" {
   type        = string
   description = "Name of the resource group"

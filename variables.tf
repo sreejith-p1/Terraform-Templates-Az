@@ -1,3 +1,4 @@
+# Root variables that control deployment attributes and Azure authentication.
 variable "environment" {
   type        = string
   description = "Deployment environment (dev/uat/prod)"

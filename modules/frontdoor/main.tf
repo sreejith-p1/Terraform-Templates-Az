@@ -1,3 +1,4 @@
+# Front Door module creates an Azure Front Door endpoint for global HTTP/HTTPS traffic.
 resource "azurerm_cdn_frontdoor_profile" "main" {
   name                = "${var.project_name}-${var.environment}-fd"
   resource_group_name = var.resource_group_name

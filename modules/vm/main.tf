@@ -1,3 +1,4 @@
+# VM module deploys one or more Windows VMs with network interfaces.
 resource "azurerm_network_interface" "main" {
   count = var.vm_count
 

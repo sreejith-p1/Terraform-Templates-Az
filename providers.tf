@@ -7,6 +7,8 @@ terraform {
   }
 }
 
+# Configure the Azure provider with credentials from variables.
+# These values should be provided securely through terraform.tfvars, environment variables, or a secret manager.
 provider "azurerm" {
   features {}
 
