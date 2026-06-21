@@ -1,0 +1,17 @@
+# Copy this file to terraform.tfvars and fill in your values
+# This file is local and should NOT be committed
+
+environment             = "dev"
+project_name            = "myproj"
+resource_group_name     = "rg-myproj-dev"
+location                = "eastus"
+vm_count                = 2
+vmss_instance_count     = 3
+vm_size                 = "Standard_DS1_v2"
+mysql_sku               = "GP_Gen5_2"
+
+# Use environment variables for sensitive data:
+# export ARM_SUBSCRIPTION_ID="your-subscription-id"
+# export ARM_CLIENT_ID="your-client-id"
+# export ARM_CLIENT_SECRET="your-client-secret"
+# export ARM_TENANT_ID="your-tenant-id"

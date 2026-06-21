@@ -1,0 +1,119 @@
+stages:
+  - validate
+  - plan
+  - apply
+
+variables:
+  TF_ROOT: "."
+  ARM_USE_OIDC: "true"
+  TF_VERSION: "1.0"
+
+cache:
+  paths:
+    - .terraform/
+
+# Base job template for terraform
+.terraform_base:
+  image: hashicorp/terraform:1.0
+  before_script:
+    - cd ${TF_ROOT}
+    - terraform init -backend-config=environments/${ENVIRONMENT}/backend.tfvars
+
+# Validate Terraform configuration
+validate:
+  extends: .terraform_base
+  stage: validate
+  script:
+    - terraform validate
+  only:
+    - merge_requests
+    - main
+
+# Plan for dev environment
+plan:dev:
+  extends: .terraform_base
+  stage: plan
+  variables:
+    ENVIRONMENT: "dev"
+  script:
+    - terraform plan -var-file=environments/dev/variables.tfvars -out=tfplan-dev
+  artifacts:
+    paths:
+      - tfplan-dev
+    expire_in: 1 week
+  only:
+    - merge_requests
+    - main
+
+# Plan for UAT environment
+plan:uat:
+  extends: .terraform_base
+  stage: plan
+  variables:
+    ENVIRONMENT: "uat"
+  script:
+    - terraform plan -var-file=environments/uat/variables.tfvars -out=tfplan-uat
+  artifacts:
+    paths:
+      - tfplan-uat
+    expire_in: 1 week
+  only:
+    - main
+
+# Plan for prod environment
+plan:prod:
+  extends: .terraform_base
+  stage: plan
+  variables:
+    ENVIRONMENT: "prod"
+  script:
+    - terraform plan -var-file=environments/prod/variables.tfvars -out=tfplan-prod
+  artifacts:
+    paths:
+      - tfplan-prod
+    expire_in: 1 week
+  only:
+    - tags
+
+# Apply for dev environment
+apply:dev:
+  extends: .terraform_base
+  stage: apply
+  variables:
+    ENVIRONMENT: "dev"
+  script:
+    - terraform apply -auto-approve tfplan-dev
+  dependencies:
+    - plan:dev
+  when: manual
+  only:
+    - main
+
+# Apply for UAT environment
+apply:uat:
+  extends: .terraform_base
+  stage: apply
+  variables:
+    ENVIRONMENT: "uat"
+  script:
+    - terraform apply -auto-approve tfplan-uat
+  dependencies:
+    - plan:uat
+  when: manual
+  only:
+    - main
+
+# Apply for prod environment
+apply:prod:
+  extends: .terraform_base
+  stage: apply
+  variables:
+    ENVIRONMENT: "prod"
+  script:
+    - terraform apply -auto-approve tfplan-prod
+  dependencies:
+    - plan:prod
+  when: manual
+  only:
+    - tags
+
